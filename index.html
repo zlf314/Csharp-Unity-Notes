@@ -113,6 +113,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 </div>
 
 <script>
+console.log("SCRIPT 1 START");
 var modules = [
 {
 id: "intro",
@@ -404,6 +405,10 @@ content: "<h4>选择排序原理</h4><p>选择排序每轮找到未排序部分�
 ]}]
 ];
 var DATA_JS_OK = true;
+console.log("SCRIPT 1 END - modules defined, lessons:", modules.reduce(function(a,m){return a+m.lessons.length;},0));
+</script>
+
+<script>console.log("BETWEEN scripts - modules exists:", typeof modules!=="undefined");</script>
 
 <script>
 var allLessonsFlat=[],totalLessons=0;
