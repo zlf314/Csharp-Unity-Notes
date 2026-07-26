@@ -112,13 +112,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 <div class="content" id="content"></div>
 </div>
 
-<script src="data.js"></script>
+<script src="data.js" onerror="document.getElementById('content').innerHTML='<div style=padding:2rem;color:red><h3>data.js 加载失败 (404/网络错误)</h3><p>文件可能未被GitHub Pages正确部署。请检查Actions标签页确认部署成功。</p></div>';"></script>
 <script>
 var allLessonsFlat=[],totalLessons=0;
 function buildSite(){
  var sn=document.getElementById('sidebarNav'),ct=document.getElementById('content');
  sn.innerHTML='';ct.innerHTML='';allLessonsFlat=[];totalLessons=0;
- if(typeof modules==='undefined'){ct.innerHTML='<div style="padding:2rem;color:red"><h3>⚠ 数据加载失败</h3><p>data.js 未能正确加载，请检查文件是否存在。</p></div>';return;}
+ if(typeof modules==='undefined'){var msg=typeof DATA_JS_OK==='undefined'?'<b>data.js 文件未加载 (404)</b><br>请检查 GitHub Actions 部署状态':'<b>data.js 已加载但 modules 未定义</b><br>文件中可能存在 JS 语法错误';ct.innerHTML='<div style="padding:2rem;color:red;font-family:monospace"><h3>⚠ 数据加载失败</h3><p>'+msg+'</p></div>';return;}
  modules.forEach(function(mod,mi){
   totalLessons+=mod.lessons.length;
   var sec=document.createElement('div');sec.className='nav-section';
