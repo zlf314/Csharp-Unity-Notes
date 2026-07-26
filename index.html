@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>C# 从入门到进阶 · 学习笔记</title>
+<meta name="theme-color" content="#68217a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="C# 笔记">
+<link rel="manifest" href="manifest.json">
 <style>
 :root{--bg:#fff;--bg2:#f5f7fa;--text:#1a1a2e;--text2:#555;--border:#e2e8f0;--accent:#68217a;--accent2:#9b4dca;--code-bg:#1e1e2e;--code-text:#cdd6f4;--sidebar-bg:#1a1a2e;--sidebar-text:#cdd6f4;--sidebar-hover:#2a2a4e;--card-bg:#fff;--card-shadow:0 2px 12px rgba(0,0,0,.08);--tag-bg:#f0e6f6;--tag-text:#68217a;--badge-bg:#68217a;--badge-text:#fff;--highlight:#fff3cd;--warn:#f59e0b}
 [data-theme="dark"]{--bg:#0d1117;--bg2:#161b22;--text:#e6edf3;--text2:#8b949e;--border:#30363d;--accent:#9b4dca;--accent2:#b388ff;--code-bg:#0d1117;--code-text:#e6edf3;--sidebar-bg:#0d1117;--sidebar-text:#e6edf3;--sidebar-hover:#1c2333;--card-bg:#161b22;--card-shadow:0 2px 12px rgba(0,0,0,.3);--tag-bg:#1c1a2e;--tag-text:#b388ff;--badge-bg:#9b4dca;--highlight:#2d2410}
@@ -441,6 +446,15 @@ document.addEventListener('click',function(e){if(!e.target.closest('.search-wrap
 document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();document.getElementById('searchInput').focus();}if(e.key==='Escape'){document.getElementById('searchInput').value='';document.getElementById('searchResults').classList.remove('show');closeSidebar();}});
 function copyCode(btn){var pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(function(){btn.textContent='✓';btn.classList.add('copied');setTimeout(function(){btn.textContent='复制';btn.classList.remove('copied');},2000);});}
 buildSite();
+</script>
+<script>
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').then(function(){
+    console.log('SW registered');
+  }).catch(function(e){
+    console.log('SW failed:', e);
+  });
+}
 </script>
 </body>
 </html>
