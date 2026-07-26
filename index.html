@@ -3708,6 +3708,7 @@ dotnet build</pre></div>
 let allLessonsFlat = [];
 
 function buildSite() {
+  try {
   const sidebarNav = document.getElementById('sidebarNav');
   const content = document.getElementById('content');
   sidebarNav.innerHTML = ''; content.innerHTML = ''; allLessonsFlat = [];
@@ -3736,6 +3737,9 @@ function buildSite() {
 
   const first = document.querySelector('.lesson');
   if (first) first.classList.add('expanded');
+  } catch(e) {
+    document.getElementById('content').innerHTML = '<div style="padding:2rem;color:red;font-family:monospace;"><h3>JS Error:</h3><pre>'+e.message+'</pre><pre>Line: '+e.lineNumber+'</pre><pre>Stack: '+e.stack+'</pre></div>';
+  }
 }
 
 function toggleLesson(el) { el.classList.toggle('expanded'); }
