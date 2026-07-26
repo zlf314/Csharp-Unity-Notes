@@ -156,6 +156,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 <div class="content" id="content"></div>
 </div>
 <script>
+document.write('<div style="position:fixed;top:0;right:0;background:lime;color:#000;z-index:99999;padding:4px 10px;font:12px monospace;">SCRIPT START</div>');
 /*====== MODULES DATA ======*/
 const modules = [
 {id:'intro', title:'一、C# 入门教程', desc:'从零开始，掌握 C# 的基本语法和控制结构', badge:'入门', lessons:[
@@ -3810,6 +3811,7 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') { clearSearch(); closeSidebar(); }
 });
 
+document.write('<div style="position:fixed;top:0;right:200px;background:lime;color:#000;z-index:99999;padding:4px 10px;font:12px monospace;">SCRIPT END - modules='+(typeof modules)+' len='+(typeof modules!=='undefined'?modules.length:'N/A')+'</div>');
 loadTheme();
 buildSite();
 </script>
