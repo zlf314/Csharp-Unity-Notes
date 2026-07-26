@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>C# 学习笔记 · 测试</title>
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C# 从入门到进阶 · 学习笔记</title>
 <style>
 :root{--bg:#fff;--bg2:#f5f7fa;--text:#1a1a2e;--text2:#555;--border:#e2e8f0;--accent:#68217a;--accent2:#9b4dca;--code-bg:#1e1e2e;--code-text:#cdd6f4;--sidebar-bg:#1a1a2e;--sidebar-text:#cdd6f4;--sidebar-hover:#2a2a4e;--card-bg:#fff;--card-shadow:0 2px 12px rgba(0,0,0,.08);--tag-bg:#f0e6f6;--tag-text:#68217a;--badge-bg:#68217a;--badge-text:#fff;--highlight:#fff3cd;--warn:#f59e0b}
-*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;font-size:16px}
+[data-theme="dark"]{--bg:#0d1117;--bg2:#161b22;--text:#e6edf3;--text2:#8b949e;--border:#30363d;--accent:#9b4dca;--accent2:#b388ff;--code-bg:#0d1117;--code-text:#e6edf3;--sidebar-bg:#0d1117;--sidebar-text:#e6edf3;--sidebar-hover:#1c2333;--card-bg:#161b22;--card-shadow:0 2px 12px rgba(0,0,0,.3);--tag-bg:#1c1a2e;--tag-text:#b388ff;--badge-bg:#9b4dca;--highlight:#2d2410}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7;display:flex;min-height:100vh}
 ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#c1c1c1;border-radius:3px}
+
 .sidebar{width:280px;min-width:280px;height:100vh;position:fixed;top:0;left:0;background:var(--sidebar-bg);color:var(--sidebar-text);overflow-y:auto;z-index:100;display:flex;flex-direction:column}
 .sidebar-header{padding:1.5rem 1.25rem;border-bottom:1px solid rgba(255,255,255,.1);position:sticky;top:0;background:var(--sidebar-bg);z-index:2}
 .sidebar-header h1{font-size:1.15rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
@@ -19,7 +23,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 .nav-section .arr{font-size:.6rem;transition:transform .2s}
 .nav-section.collapsed .arr{transform:rotate(-90deg)}
 .nav-lessons{list-style:none}
-.nav-lessons li a{display:block;padding:.35rem 1.25rem .35rem 1.75rem;font-size:.82rem;color:var(--sidebar-text);text-decoration:none;opacity:.7;transition:all .15s;border-left:2px solid transparent}
+.nav-lessons li a{display:block;padding:.35rem 1.25rem .35rem 1.75rem;font-size:.82rem;color:var(--sidebar-text);text-decoration:none;opacity:.7;transition:all .15s;border-left:2px solid transparent;word-break:break-all}
 .nav-lessons li a:hover,.nav-lessons li a.active{opacity:1;background:var(--sidebar-hover);border-left-color:var(--accent2)}
 .sidebar-footer{padding:.75rem 1.25rem;border-top:1px solid rgba(255,255,255,.1);font-size:.72rem;opacity:.4}
 .main{margin-left:280px;flex:1;min-width:0}
@@ -28,10 +32,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 .search-wrap input{width:100%;padding:.5rem .75rem .5rem 2.25rem;border:1px solid var(--border);border-radius:8px;font-size:.88rem;background:var(--bg2);color:var(--text);outline:none;transition:all .2s}
 .search-wrap input:focus{border-color:var(--accent2);box-shadow:0 0 0 3px rgba(155,77,202,.15)}
 .search-icon{position:absolute;left:.7rem;top:50%;transform:translateY(-50%);opacity:.4}
+.search-results{position:absolute;top:100%;left:0;right:0;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;box-shadow:var(--card-shadow);max-height:320px;overflow-y:auto;z-index:60;display:none;margin-top:4px}
+.search-results.show{display:block}
+.search-results a{display:block;padding:.5rem .75rem;color:var(--text);text-decoration:none;font-size:.85rem;border-bottom:1px solid var(--border)}
+.search-results a:hover{background:var(--bg2)}
+.sr-module{font-size:.7rem;color:var(--accent2)}.no-results{padding:.75rem;text-align:center;color:var(--text2)}
 .topbar-actions{display:flex;gap:.5rem;align-items:center}
-.topbar-actions button{background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:.45rem .75rem;border-radius:6px;cursor:pointer;font-size:.82rem;transition:all .15s;white-space:nowrap}
+.topbar-actions button{background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:.45rem .75rem;border-radius:6px;cursor:pointer;font-size:.82rem;white-space:nowrap}
 .topbar-actions button:hover{background:var(--border)}
-.menu-toggle{display:none;font-size:1.1rem;padding:.4rem .5rem;line-height:1}
+.btn-icon{font-size:1.1rem;padding:.4rem .5rem;line-height:1}
+.menu-toggle{display:none}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99}
+.overlay.show{display:block}
 .content{padding:1.5rem 2rem 4rem;max-width:960px}
 .module-header{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:2px solid var(--border)}
 .module-badge{display:inline-block;background:var(--badge-bg);color:var(--badge-text);padding:.2rem .75rem;border-radius:20px;font-size:.75rem;font-weight:600;margin-bottom:.5rem}
@@ -58,78 +70,80 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 .lesson-body table th,.lesson-body table td{border:1px solid var(--border);padding:.4rem .6rem;text-align:left}
 .lesson-body table th{background:var(--bg2);font-weight:700}
 .lesson-body table tr:nth-child(even){background:var(--bg2)}
+.lesson-body table tr:hover{background:var(--highlight)}
 .highlight-box{background:var(--highlight);border-left:4px solid var(--warn);padding:.6rem 1rem;margin:.75rem 0;border-radius:0 6px 6px 0;font-size:.88rem}
 .code-block{background:var(--code-bg);color:var(--code-text);border-radius:8px;margin:.75rem 0;overflow:hidden}
 .code-header{display:flex;justify-content:space-between;align-items:center;padding:.4rem .75rem;background:rgba(255,255,255,.05);font-size:.75rem}
 .code-lang{opacity:.5;text-transform:uppercase;letter-spacing:1px}
 .code-copy{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);padding:.15rem .5rem;border-radius:4px;cursor:pointer;font-size:.7rem}
 .code-copy:hover{background:rgba(255,255,255,.1)}
-.code-block pre{padding:.75rem 1rem;margin:0;overflow-x:auto;font-size:.82rem;font-family:Consolas,monospace;line-height:1.55}
+.code-copy.copied{border-color:#10b981;color:#10b981}
+.code-block pre{padding:.75rem 1rem;margin:0;overflow-x:auto;font-size:.82rem;font-family:Consolas,"Fira Code",monospace;line-height:1.55;white-space:pre-wrap;word-break:break-all}
 .kw{color:#c792ea}.str{color:#c3e88d}.cm{color:#676e95;font-style:italic}.num{color:#f78c6c}.fn{color:#82aaff}.type{color:#ffcb6b}
 @media(max-width:768px){
 .sidebar{transform:translateX(-100%);transition:transform .3s}
 .sidebar.open{transform:translateX(0)}
-.menu-toggle{display:inline-flex}
-.main{margin-left:0}
-.topbar{padding:.5rem .75rem}
-.content{padding:.75rem 1rem 2rem}
-}
-</style>
+.menu-toggle{display:inline-flex}.main{margin-left:0}
+.topbar{padding:.5rem .75rem}.content{padding:.75rem 1rem 2rem}
+.module-title{font-size:1.4rem}.lesson-body{padding:.75rem 1rem}
+}</style>
 </head>
 <body>
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 <aside class="sidebar" id="sidebar">
-<div class="sidebar-header"><h1>📘 C# 学习笔记</h1><p>从入门到进阶</p></div>
+<div class="sidebar-header"><h1>📘 C# 学习笔记</h1><p>从入门到进阶 · 系统化知识体系</p></div>
 <nav class="sidebar-nav" id="sidebarNav"></nav>
-<div class="sidebar-footer">Test v1</div>
+<div class="sidebar-footer" id="sidebarFooter">加载中...</div>
 </aside>
 <div class="main">
 <div class="topbar">
-<button class="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
-<div class="search-wrap"><span class="search-icon">🔍</span><input type="text" id="searchInput" placeholder="搜索知识点…" oninput="doSearch()"></div>
+<button class="menu-toggle btn-icon" onclick="toggleSidebar()">☰</button>
+<div class="search-wrap">
+<span class="search-icon">🔍</span>
+<input type="text" id="searchInput" placeholder="搜索知识点… (Ctrl+K)" oninput="doSearch()">
+<div class="search-results" id="searchResults"></div>
+</div>
 <div class="topbar-actions">
 <button onclick="expandAll()">📖 展开</button>
 <button onclick="collapseAll()">📕 折叠</button>
+<button class="btn-icon" onclick="toggleTheme()" title="切换主题">🌓</button>
 </div>
 </div>
 <div class="content" id="content"></div>
 </div>
-<div id="diag" style="position:fixed;top:0;right:0;z-index:99999;padding:4px 10px;font:12px monospace;background:yellow;color:#000;">JS NOT RUN</div>
+
+<script src="data.js"></script>
 <script>
-document.getElementById('diag').textContent='JS OK';
-document.getElementById('diag').style.background='lime';
-var modules=[{id:'m1',title:'一、C# 入门教程',desc:'从零开始掌握C#基本语法',badge:'入门',lessons:[
-{id:'l1',title:'第一个应用程序',tags:['Hello World','Console'],content:'<h4>第一个C#程序</h4><div class="code-block"><div class="code-header"><span class="code-lang">C#</span></div><pre><span class="kw">using</span> <span class="type">System</span>;\n<span class="kw">class</span> <span class="type">Program</span>{\n  <span class="kw">static void</span> <span class="fn">Main</span>(){\n    Console.WriteLine(<span class="str">"Hello World!"</span>);\n  }\n}</pre></div><p>这是每个程序员的第一行代码。C# 程序从 <code>Main</code> 方法开始执行。</p>'},
-{id:'l2',title:'变量',tags:['int','float','string','bool'],content:'<h4>常用变量类型</h4><table><tr><th>类型</th><th>说明</th><th>示例</th></tr><tr><td><code>int</code></td><td>整数(-21亿~21亿)</td><td><code>int age=18;</code></td></tr><tr><td><code>float</code></td><td>单精度浮点数</td><td><code>float h=1.75f;</code></td></tr><tr><td><code>double</code></td><td>双精度浮点数</td><td><code>double d=3.14;</code></td></tr><tr><td><code>bool</code></td><td>布尔值</td><td><code>bool ok=true;</code></td></tr><tr><td><code>string</code></td><td>字符串</td><td><code>string s="Hello";</code></td></tr><tr><td><code>char</code></td><td>单个字符</td><td><code>char c=\'A\';</code></td></tr></table><div class="highlight-box">💡 <strong>口诀：</strong>数字用int，小数用float，字符串用string，真假用bool。</div>'}
-]}];
-function build(){
-var sn=document.getElementById('sidebarNav'),ct=document.getElementById('content');
-sn.innerHTML='';ct.innerHTML='';
-modules.forEach(function(mod,mi){
-var sec=document.createElement('div');sec.className='nav-section';
-sec.innerHTML='<div class="nav-section-title" onclick="this.parentElement.classList.toggle(\'collapsed\')"><span>'+(mod.badge?'▾ ':'')+mod.title+'</span><span class="arr">▼</span></div><ul class="nav-lessons">'+mod.lessons.map(function(l,li){return '<li><a href="#l-'+mi+'-'+li+'" onclick="var e=document.getElementById(\'l-'+mi+'-'+li+'\');if(e){e.scrollIntoView({behavior:\'smooth\'});e.classList.add(\'expanded\');}">'+l.title+'</a></li>';}).join('')+'</ul>';
-sn.appendChild(sec);
-var md=document.createElement('div');md.innerHTML='<div class="module-header"><span class="module-badge">'+mod.badge+'</span><h2 class="module-title">'+mod.title+'</h2><p class="module-desc">'+mod.desc+'</p></div>';
-mod.lessons.forEach(function(l,li){
-var ld=document.createElement('div');ld.className='lesson';ld.id='l-'+mi+'-'+li;
-ld.innerHTML='<div class="lesson-header" onclick="this.parentElement.classList.toggle(\'expanded\')"><span class="lesson-number">'+(li+1)+'</span><div class="lesson-info"><h3>'+l.title+'</h3><div class="tags">'+l.tags.map(function(t){return '<span class="tag">'+t+'</span>';}).join('')+'</div></div><span class="lesson-toggle">▼</span></div><div class="lesson-body">'+l.content+'</div>';
-md.appendChild(ld);
-});
-ct.appendChild(md);
-});
-document.querySelector('.lesson').classList.add('expanded');
+var allLessonsFlat=[],totalLessons=0;
+function buildSite(){
+ var sn=document.getElementById('sidebarNav'),ct=document.getElementById('content');
+ sn.innerHTML='';ct.innerHTML='';allLessonsFlat=[];totalLessons=0;
+ if(typeof modules==='undefined'){ct.innerHTML='<div style="padding:2rem;color:red"><h3>⚠ 数据加载失败</h3><p>data.js 未能正确加载，请检查文件是否存在。</p></div>';return;}
+ modules.forEach(function(mod,mi){
+  totalLessons+=mod.lessons.length;
+  var sec=document.createElement('div');sec.className='nav-section';
+  sec.innerHTML='<div class="nav-section-title" onclick="this.parentElement.classList.toggle(\'collapsed\')"><span>'+(mod.badge?'▾ ':'')+mod.title+'</span><span class="arr">▼</span></div><ul class="nav-lessons">'+mod.lessons.map(function(l,li){var fid='L'+mi+'-'+li;allLessonsFlat.push({title:l.title,tags:l.tags,content:l.content,flatId:fid,moduleTitle:mod.title,moduleBadge:mod.badge});return '<li><a href="#'+fid+'" onclick="jumpTo(\''+fid+'\')">'+l.title+'</a></li>';}).join('')+'</ul>';
+  sn.appendChild(sec);
+  var md=document.createElement('div');md.innerHTML='<div class="module-header">'+(mod.badge?'<span class="module-badge">'+mod.badge+'</span>':'')+'<h2 class="module-title">'+mod.title+'</h2><p class="module-desc">'+mod.desc+'</p></div>';
+  mod.lessons.forEach(function(l,li){var fid='L'+mi+'-'+li;var ld=document.createElement('div');ld.className='lesson';ld.id=fid;ld.innerHTML='<div class="lesson-header" onclick="this.parentElement.classList.toggle(\'expanded\')"><span class="lesson-number">'+(li+1)+'</span><div class="lesson-info"><h3>'+l.title+'</h3><div class="tags">'+l.tags.map(function(t){return '<span class="tag">'+t+'</span>';}).join('')+'</div></div><span class="lesson-toggle">▼</span></div><div class="lesson-body">'+l.content+'</div>';md.appendChild(ld);});
+  ct.appendChild(md);
+ });
+ document.getElementById('sidebarFooter').textContent='共 '+modules.length+' 模块 · '+totalLessons+' 课时';
+ var f=document.querySelector('.lesson');if(f)f.classList.add('expanded');
 }
+function toggleLesson(el){el.classList.toggle('expanded');}
 function expandAll(){var all=document.querySelectorAll('.lesson');for(var i=0;i<all.length;i++)all[i].classList.add('expanded');}
 function collapseAll(){var all=document.querySelectorAll('.lesson');for(var i=0;i<all.length;i++)all[i].classList.remove('expanded');}
-function doSearch(){
-var q=document.getElementById('searchInput').value.toLowerCase();
-var all=document.querySelectorAll('.lesson');
-for(var i=0;i<all.length;i++){
-var t=all[i].querySelector('h3').textContent.toLowerCase();
-all[i].style.display=t.indexOf(q)>=0?'':'none';
-}
-}
-build();
-document.getElementById('diag').textContent='ALL OK - '+modules.length+' modules';
+function jumpTo(id){closeSidebar();var el=document.getElementById(id);if(el){el.scrollIntoView({behavior:'smooth'});el.classList.add('expanded');var links=document.querySelectorAll('.nav-lessons a');for(var i=0;i<links.length;i++)links[i].classList.remove('active');var link=document.querySelector('a[href="#'+id+'"]');if(link)link.classList.add('active');}}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('show');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('show');}
+function toggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?null:'dark';h.setAttribute('data-theme',n||'');localStorage.setItem('cs-notes-theme',n||'light');}
+(function(){var s=localStorage.getItem('cs-notes-theme');if(s==='dark')document.documentElement.setAttribute('data-theme','dark');})();
+function doSearch(){var q=document.getElementById('searchInput').value.trim().toLowerCase();var r=document.getElementById('searchResults');if(!q){r.classList.remove('show');return;}var m=allLessonsFlat.filter(function(l){return l.title.toLowerCase().indexOf(q)>=0||l.tags.some(function(t){return t.toLowerCase().indexOf(q)>=0;})||l.content.toLowerCase().indexOf(q)>=0;}).slice(0,15);if(m.length===0){r.innerHTML='<div class="no-results">未找到匹配的知识点</div>';}else{r.innerHTML=m.map(function(x){return '<a href="#'+x.flatId+'" onclick="jumpTo(\''+x.flatId+'\');document.getElementById(\'searchResults\').classList.remove(\'show\');document.getElementById(\'searchInput\').value=\'\';"><span class="sr-module">'+(x.moduleBadge?'['+x.moduleBadge+'] ':'')+x.moduleTitle+'</span> › '+x.title+'</a>';}).join('');}r.classList.add('show');}
+document.addEventListener('click',function(e){if(!e.target.closest('.search-wrap'))document.getElementById('searchResults').classList.remove('show');});
+document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();document.getElementById('searchInput').focus();}if(e.key==='Escape'){document.getElementById('searchInput').value='';document.getElementById('searchResults').classList.remove('show');closeSidebar();}});
+function copyCode(btn){var pre=btn.closest('.code-block').querySelector('pre');navigator.clipboard.writeText(pre.textContent).then(function(){btn.textContent='✓';btn.classList.add('copied');setTimeout(function(){btn.textContent='复制';btn.classList.remove('copied');},2000);});}
+buildSite();
 </script>
 </body>
 </html>
